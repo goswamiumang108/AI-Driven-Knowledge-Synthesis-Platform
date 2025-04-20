@@ -4,3 +4,4 @@
 *.pyc
 .env
 /Documentation/Example
+/static/images/RefImages/
