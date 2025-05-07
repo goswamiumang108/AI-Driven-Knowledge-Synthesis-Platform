@@ -16,7 +16,6 @@ header
 	display: flex;
 	justify-content: space-between;
 	margin: 0 auto;
-	max-width: 100%;
 	padding: 1rem 1.5rem;
 }
 
@@ -73,7 +72,7 @@ h1
 {
 	font-size: 4.5rem;
 	font-weight: 800;
-	line-height: 1.1;
+	margin: 0;
 	text-align: center;
 }
 
@@ -120,7 +119,6 @@ button a
 	text-decoration: none;
 }
 
-/* Dashboard-specific Styles */
 .welcome-blue
 {
 	color: #4285f4;
@@ -135,17 +133,17 @@ button a
 {
 	align-items: center;
 	border-bottom: 1px solid #d1d5db;
-	display: flex;
-	justify-content: space-between;
+	display: contents;
+	justify-content: center;
 	margin-bottom: 16px;
 	padding-bottom: 8px;
 }
 
 h2
 {
-	font-size: 24px;
+	font-size: 2.25rem;
 	font-weight: 600;
-	margin: 0;
+	margin-inside: 1rem;
 }
 
 #createNewBtn
@@ -158,7 +156,6 @@ h2
 	font-size: 14px;
 	font-weight: 600;
 	gap: 8px;
-	/* From dashboard_styles.css */
 	padding: 8px 20px;
 	transition: background-color 0.2s ease;
 }
@@ -176,8 +173,7 @@ h2
 	width: 16px;
 }
 
-.plus-icon::before,
-.plus-icon::after
+.plus-icon::before, .plus-icon::after
 {
 	background-color: #1a4ed0;
 	content: "";
@@ -253,4 +249,34 @@ h2
 {
 	color: #5f6368;
 	font-size: 12px;
+}
+
+.notebook-meta-container
+{
+	display: flex;
+	justify-content: space-between;
+	margin-top: 8px;
+	width: 100%;
+}
+
+.notebook-sources
+{
+	color: #5f6368;
+	font-size: 12px;
+	text-align: left;
+}
+
+.notebook-date
+{
+	color: #5f6368;
+	font-size: 12px;
+	text-align: right;
+}
+
+.gradient-separator
+{
+	background: linear-gradient(to right, #5ACB8E, #4285f4); /* Gradient colors */
+	height: 0.5rem; /* Set the height of the separator */
+	margin: auto; /* Center the separator */
+	width: 84%; /* Set your desired width */
 }

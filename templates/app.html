@@ -1,0 +1,153 @@
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta content="width=device-width, initial-scale=1" name="viewport">
+		<title>NotebookLM</title>
+		<link rel="icon" href="../static/images/icon.png">
+		<link href="../static/css/app_styles.css" type="text/css" rel="stylesheet">
+		<script src="../static/js/app_script.js"></script>
+	</head>
+
+
+	<body>
+		<!-- Top bar -->
+		<header class="header">
+			<img src="../static/images/icon.png" width="25" height="25" alt="">
+			<h1 class="title">Untitled notebook</h1>
+			<div class="spacer"></div>
+		</header>
+
+		<!-- Main content -->
+		<main class="main-content">
+
+			<!-- Sources panel -->
+			<section class="panel sources-panel">
+				<header class="panel-header">
+					<h2 class="panel-title">Sources</h2>
+					<button aria-label="Toggle sources panel" class="panel-toggle" type="button">
+						<img src="../static/images/LeftSideBar_Collapse.svg" height="27" width="27" alt="">
+					</button>
+				</header>
+
+				<input id="fileInput" type="file" multiple style="display: none;">
+				<div id="dragDropBox" class="drag-drop-box">
+					<div class="drag-drop-content">
+						<img src="../static/images/cloud-upload.svg" alt="Upload Icon" class="upload-icon">
+						<p class="drag-drop-text">Drag and drop your files here, or
+							<span class="click-to-upload"> click to upload</span>
+						</p>
+					</div>
+				</div>
+				<div style="border-bottom: 1px solid #dfe1e5;"></div>
+
+				<div class="panel-empty-state">
+					<img class="empty-icon" height="48" alt="Document icon gray"
+							src="../static/images/Stacked_books_icon.svg" width="48">
+					<p>Saved sources will appear here</p>
+					<p>Click Add source above to add PDFs, websites, text, videos or audio files.</p>
+				</div>
+			</section>
+
+			<!-- Chat panel -->
+			<section class="panel chat-panel">
+				<header class="panel-header">
+					<h2 class="panel-title">Chat</h2>
+				</header>
+
+				<form action="#" class="chat-form">
+					<input aria-label="Type here" class="chat-input" placeholder="Type here" type="text">
+					<button aria-label="Send" class="send-button" type="submit">
+						<img src="../static/images/send.svg" width="25" alt="">
+					</button>
+				</form>
+			</section>
+
+			<!-- Studio panel -->
+			<section class="panel studio-panel">
+				<header class="panel-header">
+					<h2 class="panel-title">Studio</h2>
+					<button aria-label="Toggle studio panel" class="panel-toggle" type="button">
+						<img src="../static/images/RightSideBar_Collapse.svg" height="27" width="27" alt="">
+					</button>
+				</header>
+				<section class="studio-section">
+					<div class="section-header">
+						<p class="section-title">Audio Overview</p>
+						<button aria-label="Audio info" class="info-button" type="button">
+							<img src="../static/images/info.svg" height="18" width="18" alt="">
+						</button>
+					</div>
+					<div class="audio-card">
+						<div class="audio-icon-container">
+							<img src="../static/images/podcast.svg" style="width: 72%" alt="">
+						</div>
+						<div class="audio-info">
+							<p class="audio-title">Deep Dive conversation</p>
+							<p class="audio-subtitle">Two hosts (English only)</p>
+						</div>
+					</div>
+					<div class="action-buttons">
+						<button class="action-button" disabled="" type="button">Customise</button>
+						<button class="action-button generate-button" disabled="" type="button">Generate</button>
+					</div>
+				</section>
+				<section class="studio-section">
+					<div class="section-header">
+						<p class="section-title">Notes</p>
+						<button aria-label="More options" class="more-options-button" type="button">
+							<svg aria-hidden="true" class="icon" fill="none" stroke="currentColor"
+									stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24">
+								<circle cx="12" cy="12" r="1"></circle>
+								<circle cx="19" cy="12" r="1"></circle>
+								<circle cx="5" cy="12" r="1"></circle>
+							</svg>
+						</button>
+					</div>
+					<button class="add-note-button" type="button">+ Add note</button>
+					<div class="note-buttons">
+						<button class="note-button" disabled="" type="button">
+							<svg aria-hidden="true" class="icon" fill="none" stroke="currentColor"
+									stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24">
+								<path d="M12 20h9"></path>
+								<path d="M12 4h9"></path>
+								<path d="M4 12h16"></path>
+								<path d="M4 6h16"></path>
+								<path d="M4 18h16"></path>
+							</svg>
+							Study guide
+						</button>
+						<button class="note-button" disabled="" type="button">
+							<svg aria-hidden="true" class="icon" fill="none" stroke="currentColor"
+									stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24">
+								<rect height="16" rx="2" ry="2" width="18" x="3" y="4"></rect>
+								<line x1="3" x2="21" y1="10" y2="10"></line>
+							</svg>
+							Briefing doc
+						</button>
+						<button class="note-button" disabled="" type="button">
+							<svg aria-hidden="true" class="icon" fill="none" stroke="currentColor"
+									stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24">
+								<rect height="16" rx="2" ry="2" width="18" x="3" y="4"></rect>
+								<line x1="3" x2="21" y1="10" y2="10"></line>
+							</svg>
+							FAQ
+						</button>
+						<button class="note-button" disabled="" type="button">
+							<svg aria-hidden="true" class="icon" fill="none" stroke="currentColor"
+									stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24">
+								<polyline points="3 17 9 11 13 15 21 7"></polyline>
+							</svg>
+							Timeline
+						</button>
+					</div>
+					<div class="panel-empty-state">
+						<img alt="Document icon gray" class="empty-icon" height="45"
+								src="../static/images/text-files.svg" width="48">
+						<p>Saved notes will appear here</p>
+						<p>Save a chat message to create a new note or click Add note above.</p>
+					</div>
+				</section>
+			</section>
+		</main>
+	</body>
+</html>
