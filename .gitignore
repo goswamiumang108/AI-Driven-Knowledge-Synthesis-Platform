@@ -1,7 +1,9 @@
 /.idea/
 /.venv/
 /__pycache__/
-*.pyc
-.env
 /static/Documentation/Example/
 /static/images/RefImages/
+/uploads/
+/resources/
+*.pyc
+.env

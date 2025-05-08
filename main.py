@@ -1,8 +1,8 @@
 # Python Backend for AI-Driven Knowledge Synthesis Platform
 
 
-from os import getenv, listdir, mkdir, path
-
+from datetime import datetime, timezone
+from os import getenv, mkdir, path, remove
 import google.generativeai as genai
 from dotenv import load_dotenv
 from flask import *
@@ -11,9 +11,6 @@ from langchain_community.document_loaders import PyPDFLoader
 
 # Configuring Flask app
 app = Flask(__name__, template_folder="templates", static_folder="static")
-
-UPLOAD_FOLDER = path.relpath(".//uploads")
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 # Loading environment variables from .env file
 load_dotenv(dotenv_path=".env")
@@ -66,29 +63,27 @@ def upload_files():
 	if file.filename == '':
 		return jsonify({'error': 'No file selected'}), 400
 	
-	if not path.exists(UPLOAD_FOLDER):
-		mkdir(UPLOAD_FOLDER)
+	if not path.exists("./uploads"):
+		mkdir("./uploads")
 	
-	file.save(path.join(app.config['UPLOAD_FOLDER'], file.filename))
+	file_path = path.join("./uploads", path.splitext(file.filename)[0]) + datetime.now(timezone.utc).strftime("_%Y%m%d%H%M%S") + str(path.splitext(file.filename)[1])
+	file.save(file_path)
+	
+	if file.filename.endswith('.pdf'):
+		process_resources("pdf", file_path)
+		remove(file_path)
 	
 	return jsonify({'message': 'File uploaded successfully', 'filename': file.filename})
 
 
-@app.route("/process_resources")
-def process_resources():
-	def process_pdf(pdf):
-		pdf_loader = PyPDFLoader(file_path=pdf, extraction_mode="layout")
-		
+def process_resources(resource_type, resource):
+	if resource_type == "pdf":
+		pdf_loader = PyPDFLoader(file_path=resource, extraction_mode="layout")
 		if not path.exists("./resources"):
 			mkdir("./resources")
-		
-		with open(file="./resources/" + str(path.basename(pdf)).removesuffix(".pdf") + ".txt", mode="w+", encoding="utf-8") as f:
+		with open(file="./resources/" + str(path.splitext(resource)[0]) + ".txt", mode="w+", encoding="utf-8") as f:
 			for page in pdf_loader.load():
 				f.write(page.page_content.strip())
-	
-	for resource in listdir("./uploads"):
-		if resource.endswith('.pdf'):
-			process_pdf(resource)
 
 
 if __name__ == '__main__':
