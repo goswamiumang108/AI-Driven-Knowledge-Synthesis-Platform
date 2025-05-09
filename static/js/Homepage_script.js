@@ -1,4 +1,4 @@
-function tryNotebookLM()
+function tryIntelliDocs()
 {
-	window.open("/app", "_blank");
+	window.open("/app", "_self");
 }

@@ -2,7 +2,7 @@
 	<head>
 		<meta charset="utf-8">
 		<meta content="width=device-width, initial-scale=1" name="viewport">
-		<title>NotebookLM</title>
+		<title>IntelliDocs</title>
 		<link rel="icon" href="../static/images/icon.png">
 		<link href="../static/css/app_styles.css" type="text/css" rel="stylesheet">
 		<script src="../static/js/app_script.js"></script>
@@ -23,13 +23,14 @@
 			<!-- Sources panel -->
 			<section class="panel sources-panel">
 				<header class="panel-header">
-					<h2 class="panel-title">Sources</h2>
+					<p class="panel-title">Sources</p>
 					<button aria-label="Toggle sources panel" class="panel-toggle" type="button">
 						<img src="../static/images/LeftSideBar_Collapse.svg" height="27" width="27" alt="">
 					</button>
 				</header>
 
-				<input id="fileInput" type="file" style="display: none;" multiple>
+				<input id="fileInput" type="file" style="display: none;">
+
 				<div id="dragDropBox" class="drag-drop-box">
 					<div class="drag-drop-content">
 						<img src="../static/images/cloud-upload.svg" alt="Upload Icon" class="upload-icon">
@@ -38,13 +39,19 @@
 						</p>
 					</div>
 				</div>
+
+				<button id="createKnowledgeBaseBtn" class="enhanced-button" type="button">Create KnowledgeBase</button>
+
 				<div style="border-bottom: 1px solid #dfe1e5;"></div>
 
-				<div class="panel-empty-state">
-					<img class="empty-icon" height="48" alt="Document icon gray"
-							src="../static/images/Stacked_books_icon.svg" width="48">
-					<p>Saved sources will appear here</p>
-					<p>Click Add source above to add PDFs, websites, text, videos or audio files.</p>
+				<div id="resourceList" class="resource-list">
+					<p class="resource-section-title">Your Resources</p>
+					<div class="panel-empty-state">
+						<img class="empty-icon" height="48" alt="Document icon gray"
+								src="../static/images/Stacked_books_icon.svg" width="48">
+						<p>Saved sources will appear here</p>
+						<p>Click Add source above to add PDFs, websites, text, videos or audio files.</p>
+					</div>
 				</div>
 			</section>
 
@@ -53,6 +60,9 @@
 				<header class="panel-header">
 					<h2 class="panel-title">Chat</h2>
 				</header>
+
+				<!-- Conversation box -->
+				<div id="conversationBox" class="conversation-box"></div>
 
 				<form action="#" class="chat-form">
 					<input aria-label="Type here" class="chat-input" placeholder="Type here" type="text">
