@@ -5,6 +5,7 @@
 import shutil
 from datetime import datetime as dt, timezone as tz
 from os import getenv, mkdir, path, remove, scandir, system
+
 # Third-party imports
 from dotenv import load_dotenv
 from flask import *
@@ -14,8 +15,7 @@ from google import genai
 from langchain import hub
 from langchain.chat_models import init_chat_model
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain_community.docstore.in_memory import InMemoryDocstore
-from langchain_community.document_loaders import PyPDFLoader, Docx2txtLoader, CSVLoader
+from langchain_community.document_loaders import CSVLoader, Docx2txtLoader, PyPDFLoader
 from langchain_community.vectorstores.faiss import FAISS
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
 
@@ -90,9 +90,6 @@ def upload_files():
 		path.splitext(incoming_file.filename)[0]) + dt.now(tz.utc).strftime("_%Y%m%d%H%M%S") + str(
 		path.splitext(incoming_file.filename)[1]))
 	
-	processed_filepath = path.join(
-		path.relpath("./resources/"), str(path.splitext(path.basename(uploads_filepath))[0]) + ".txt")
-	
 	if incoming_file.filename == '':
 		return jsonify({'error': 'No file selected'}), 400
 	
@@ -101,50 +98,63 @@ def upload_files():
 	
 	incoming_file.save(uploads_filepath)
 	
+	return jsonify({'message': 'File uploaded successfully', 'filename': incoming_file.filename})
+
+
+def process_uploads():
+	uploads_files = [path.relpath(ele) for ele in scandir("./uploads/") if path.isfile(ele)]
+	
 	if not path.exists("./resources"):
 		mkdir("./resources")
 	
-	file_extension = path.splitext(incoming_file.filename)[1].lower()
-	if file_extension in [".pdf"]:
-		pdf_loader = PyPDFLoader(file_path=uploads_filepath, extraction_mode="layout")
-		with open(file=processed_filepath, mode="w+", encoding="utf-8") as f:
-			for page in pdf_loader.load():
-				f.write(page.page_content.strip())
-	
-	elif file_extension in [".txt"]:
-		shutil.move(src=uploads_filepath, dst=processed_filepath)
+	for file in uploads_files:
+		file_path = path.relpath(file)
+		file_name = path.basename(file_path)
+		file_extension = path.splitext(file_name)[1].lower()
 		
-	elif file_extension in [".md", ".yml", ".json", ".xml", ".yaml"]:
-		pass
+		processed_filepath = path.join(path.relpath("./resources/"), str(path.splitext(file_name)[0]) + ".txt")
+		
+		# noinspection PyBroadException
+		try:
+			if file_extension in [".pdf"]:
+				pdf_loader = PyPDFLoader(file_path=file_path, extraction_mode="layout")
+				with open(file=processed_filepath, mode="w+", encoding="utf-8") as f:
+					for page in pdf_loader.load():
+						f.write(page.page_content.strip())
+			elif file_extension in [".txt"]:
+				shutil.move(src=file_path, dst=processed_filepath)
+			elif file_extension in [".md", ".yml", ".json", ".xml", ".yaml"]:
+				pass
+			elif file_extension in [".docx", ".doc"]:
+				docx_loader = Docx2txtLoader(file_path=file_path)
+				with open(file=processed_filepath, mode="w+", encoding="utf-8") as f:
+					for page in docx_loader.load():
+						f.write(page.page_content.strip())
+			elif file_extension in [".pptx", ".ppt"]:
+				pass
+			elif file_extension in [".csv"]:
+				csv_loader = CSVLoader(file_path=file_path)
+				with open(file=processed_filepath, mode="w+", encoding="utf-8") as f:
+					for page in csv_loader.load():
+						f.write(page.page_content.strip())
+			elif file_extension in [".xlsx", ".xls"]:
+				pass
+			else:
+				return jsonify({'message': 'File type not supported', 'filename': file_name})
+		except:
+			continue
+		finally:
+			remove(path=file_path)
 	
-	elif file_extension in [".docx", ".doc"]:
-		docx_loader = Docx2txtLoader(file_path=uploads_filepath)
-		with open(file=processed_filepath, mode="w+", encoding="utf-8") as f:
-			for page in docx_loader.load():
-				f.write(page.page_content.strip())
-	
-	elif file_extension in [".pptx", ".ppt"]:
-		pass
-	
-	elif incoming_file.filename.endswith(".csv"):
-		csv_loader = CSVLoader(file_path=uploads_filepath)
-		with open(file=processed_filepath, mode="w+", encoding="utf-8") as f:
-			for page in csv_loader.load():
-				f.write(page.page_content.strip())
-	
-	elif incoming_file.filename.endswith(".xlsx") or incoming_file.filename.endswith(".xls"):
-		pass
-	
-	else:
-		return jsonify({'message': 'File type not supported', 'filename': incoming_file.filename})
-	
-	remove(path=uploads_filepath)
-	
-	return jsonify({'message': 'File uploaded successfully', 'filename': incoming_file.filename})
+	return jsonify({'message': 'Files processed successfully'})
 
 
 @app.route('/create_knowledgebase')
 def create_knowledgebase():
+	system('rmdir /s /q ".//KnowledgeBase//FAISS//"')
+	
+	process_uploads()
+	
 	Sources_Path = [path.relpath(ele) for ele in scandir("./resources/") if path.isfile(ele)]
 	Sources = [open(file=ele, mode="r", encoding="utf-8").read() for ele in Sources_Path]
 	Final_Sources = []
@@ -154,7 +164,7 @@ def create_knowledgebase():
 	
 	Sources = [ele for ele in Final_Sources]
 	
-	KnowledgeBase = FAISS.from_texts(texts=Sources, embedding=EmbeddingFunction, docstore=InMemoryDocstore())
+	KnowledgeBase = FAISS.from_texts(texts=Sources, embedding=EmbeddingFunction)
 	KnowledgeBase.save_local(folder_path=".//KnowledgeBase//FAISS//")
 	
 	return jsonify({'message': 'Knowledge base created successfully'})

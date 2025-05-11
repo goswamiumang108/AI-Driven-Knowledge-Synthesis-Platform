@@ -10,10 +10,14 @@
 
 
 	<body>
+		<!-- Loading overlay -->
+		<div id="loadingOverlay" style="display:none;">
+			<div class="loading-spinner"></div>
+		</div>
 		<!-- Top bar -->
 		<header class="header">
 			<img src="../static/images/icon.png" width="25" height="25" alt="">
-			<h1 class="title">Untitled notebook</h1>
+			<h1 class="title" id="notebookTitle" contenteditable="true" spellcheck="false">Untitled notebook</h1>
 			<div class="spacer"></div>
 		</header>
 
@@ -24,9 +28,6 @@
 			<section class="panel sources-panel">
 				<header class="panel-header">
 					<p class="panel-title">Sources</p>
-					<button aria-label="Toggle sources panel" class="panel-toggle" type="button">
-						<img src="../static/images/LeftSideBar_Collapse.svg" height="27" width="27" alt="">
-					</button>
 				</header>
 
 				<input id="fileInput" type="file" style="display: none;">
@@ -76,9 +77,6 @@
 			<section class="panel studio-panel">
 				<header class="panel-header">
 					<h2 class="panel-title">Studio</h2>
-					<button aria-label="Toggle studio panel" class="panel-toggle" type="button">
-						<img src="../static/images/RightSideBar_Collapse.svg" height="27" width="27" alt="">
-					</button>
 				</header>
 				<section class="studio-section">
 					<div class="section-header">
@@ -104,14 +102,6 @@
 				<section class="studio-section">
 					<div class="section-header">
 						<p class="section-title">Notes</p>
-						<button aria-label="More options" class="more-options-button" type="button">
-							<svg aria-hidden="true" class="icon" fill="none" stroke="currentColor"
-									stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24">
-								<circle cx="12" cy="12" r="1"></circle>
-								<circle cx="19" cy="12" r="1"></circle>
-								<circle cx="5" cy="12" r="1"></circle>
-							</svg>
-						</button>
 					</div>
 					<button class="add-note-button" type="button">+ Add note</button>
 					<div class="note-buttons">
