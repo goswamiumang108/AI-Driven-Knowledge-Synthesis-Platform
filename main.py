@@ -2,10 +2,8 @@
 
 
 # Standard library imports
-import shutil
 from datetime import datetime as dt, timezone as tz
-from os import getenv, mkdir, path, remove, scandir, system
-
+from os import getenv, mkdir, path, scandir, system
 # Third-party imports
 from dotenv import load_dotenv
 from flask import *
@@ -13,11 +11,11 @@ from flask_cors import CORS
 from google import genai
 # Langchain and related imports
 from langchain import hub
-from langchain.chat_models import init_chat_model
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain_community.document_loaders import CSVLoader, Docx2txtLoader, PyPDFLoader
+from langchain_community.document_loaders import CSVLoader, Docx2txtLoader, PyPDFLoader, TextLoader
 from langchain_community.vectorstores.faiss import FAISS
-from langchain_google_genai import GoogleGenerativeAIEmbeddings
+from langchain_google_genai import ChatGoogleGenerativeAI, GoogleGenerativeAIEmbeddings
+from langchain_core.messages import SystemMessage
 
 
 # Configuring Flask app
@@ -35,16 +33,13 @@ google_api_key = getenv("GOOGLE_API_KEY")
 GenAI_client = genai.Client(api_key=google_api_key)
 
 # Setting up the Google Generative AI Embeddings
-EmbeddingFunction = GoogleGenerativeAIEmbeddings(model="models/embedding-001")
+EmbeddingFunction = GoogleGenerativeAIEmbeddings(model="models/text-embedding-004")
 
 # Setting up the Text Splitter
 Docs_Splitter = RecursiveCharacterTextSplitter(strip_whitespace=True, length_function=len, chunk_size=10008, chunk_overlap=108)
 
 # Initializing the Chat Model
-llm = init_chat_model("gemini-2.0-flash", model_provider="google_genai")
-
-# Setting up the RAG Prompt
-prompt = hub.pull("rlm/rag-prompt")
+llm = ChatGoogleGenerativeAI(model="gemini-2.5-flash-preview-04-17", google_api_key=google_api_key)
 
 
 # noinspection PyUnresolvedReferences
@@ -81,91 +76,60 @@ def Error404(e):
 
 @app.route(rule='/upload_resources', methods=['POST'])
 def upload_files():
-	if 'file' not in request.files:
-		return jsonify({'error': 'No file part in the request'}), 400
+	if 'file' not in request.files or request.files['file'].filename == '':
+		return jsonify({'error': 'No file in the request'}), 400
 	
 	incoming_file = request.files['file']
-	
-	uploads_filepath = path.join(".//uploads/", str(
-		path.splitext(incoming_file.filename)[0]) + dt.now(tz.utc).strftime("_%Y%m%d%H%M%S") + str(
+	uploads_filepath = path.join(".//uploads/", str(path.splitext(incoming_file.filename)[0]) + dt.now(tz.utc).strftime("_%Y%m%d%H%M%S") + str(
 		path.splitext(incoming_file.filename)[1]))
-	
-	if incoming_file.filename == '':
-		return jsonify({'error': 'No file selected'}), 400
 	
 	if not path.exists("./uploads/"):
 		mkdir("./uploads/")
-	
 	incoming_file.save(uploads_filepath)
 	
 	return jsonify({'message': 'File uploaded successfully', 'filename': incoming_file.filename})
 
 
-def process_uploads():
+@app.route('/create_knowledgebase')
+def create_knowledgebase():
+	system('rmdir /s /q ".//KnowledgeBase"')
+	
 	uploads_files = [path.relpath(ele) for ele in scandir("./uploads/") if path.isfile(ele)]
+	Sources_Documents = []
 	
-	if not path.exists("./resources"):
-		mkdir("./resources")
-	
-	for file in uploads_files:
-		file_path = path.relpath(file)
+	for file_path in uploads_files:
 		file_name = path.basename(file_path)
 		file_extension = path.splitext(file_name)[1].lower()
-		
-		processed_filepath = path.join(path.relpath("./resources/"), str(path.splitext(file_name)[0]) + ".txt")
 		
 		# noinspection PyBroadException
 		try:
 			if file_extension in [".pdf"]:
 				pdf_loader = PyPDFLoader(file_path=file_path, extraction_mode="layout")
-				with open(file=processed_filepath, mode="w+", encoding="utf-8") as f:
-					for page in pdf_loader.load():
-						f.write(page.page_content.strip())
+				Sources_Documents.extend(pdf_loader.load())
 			elif file_extension in [".txt"]:
-				shutil.move(src=file_path, dst=processed_filepath)
+				txt_loader = TextLoader(file_path=file_path, encoding="utf-8")
+				Sources_Documents.extend(txt_loader.load())
 			elif file_extension in [".md", ".yml", ".json", ".xml", ".yaml"]:
 				pass
 			elif file_extension in [".docx", ".doc"]:
 				docx_loader = Docx2txtLoader(file_path=file_path)
-				with open(file=processed_filepath, mode="w+", encoding="utf-8") as f:
-					for page in docx_loader.load():
-						f.write(page.page_content.strip())
+				Sources_Documents.extend(docx_loader.load())
 			elif file_extension in [".pptx", ".ppt"]:
 				pass
 			elif file_extension in [".csv"]:
 				csv_loader = CSVLoader(file_path=file_path)
-				with open(file=processed_filepath, mode="w+", encoding="utf-8") as f:
-					for page in csv_loader.load():
-						f.write(page.page_content.strip())
+				Sources_Documents.extend(csv_loader.load())
 			elif file_extension in [".xlsx", ".xls"]:
 				pass
 			else:
-				return jsonify({'message': 'File type not supported', 'filename': file_name})
+				continue
 		except:
 			continue
-		finally:
-			remove(path=file_path)
 	
-	return jsonify({'message': 'Files processed successfully'})
-
-
-@app.route('/create_knowledgebase')
-def create_knowledgebase():
-	system('rmdir /s /q ".//KnowledgeBase//FAISS//"')
-	
-	process_uploads()
-	
-	Sources_Path = [path.relpath(ele) for ele in scandir("./resources/") if path.isfile(ele)]
-	Sources = [open(file=ele, mode="r", encoding="utf-8").read() for ele in Sources_Path]
-	Final_Sources = []
-	
-	for source in Sources:
-		Final_Sources.extend(Docs_Splitter.split_text(text=source))
-	
-	Sources = [ele for ele in Final_Sources]
-	
-	KnowledgeBase = FAISS.from_texts(texts=Sources, embedding=EmbeddingFunction)
+	KnowledgeBase = FAISS.from_documents(documents=Sources_Documents, embedding=EmbeddingFunction)
 	KnowledgeBase.save_local(folder_path=".//KnowledgeBase//FAISS//")
+	
+	system('rmdir /s /q "./uploads"')
 	
 	return jsonify({'message': 'Knowledge base created successfully'})
 
@@ -180,8 +144,16 @@ def chat():
 		
 		user_message = str(data['message'])
 		
-		retrieved_docs = FAISS.load_local(folder_path=".//KnowledgeBase//FAISS//", embeddings=EmbeddingFunction).similarity_search(user_message)
+		# Retrieve relevant documents from the knowledge base
+		retrieved_docs = FAISS.load_local(
+			folder_path=".//KnowledgeBase//FAISS//",
+			allow_dangerous_deserialization=True,
+			embeddings=EmbeddingFunction
+		).similarity_search(query=user_message)
 		
+		prompt = SystemMessage()
+		
+		# Generate the AI's response using the prompt and retrieved documents
 		messages = prompt.invoke({"question": user_message, "context": retrieved_docs})
 		response = llm.invoke(messages)
 		
@@ -193,7 +165,7 @@ def chat():
 if __name__ == '__main__':
 	system('rmdir /s /q "./uploads"')
 	system('rmdir /s /q "./resources"')
-	system('rmdir /s /q ".//KnowledgeBase//FAISS//"')
+	system('rmdir /s /q ".//KnowledgeBase"')
 	
 	CORS(app)
 	app.run(host="0.0.0.0", debug=False, load_dotenv=True)

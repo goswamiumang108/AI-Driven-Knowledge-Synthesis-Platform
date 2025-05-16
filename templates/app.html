@@ -14,6 +14,7 @@
 		<div id="loadingOverlay" style="display:none;">
 			<div class="loading-spinner"></div>
 		</div>
+
 		<!-- Top bar -->
 		<header class="header">
 			<img src="../static/images/icon.png" width="25" height="25" alt="">
@@ -66,7 +67,7 @@
 				<div id="conversationBox" class="conversation-box"></div>
 
 				<form action="#" class="chat-form">
-					<input aria-label="Type here" class="chat-input" placeholder="Type here" type="text">
+					<input aria-label="Type here" class="chat-input" placeholder="Type here" type="text" multiple>
 					<button aria-label="Send" class="send-button" type="submit">
 						<img src="../static/images/send.svg" width="25" alt="">
 					</button>
@@ -78,6 +79,7 @@
 				<header class="panel-header">
 					<h2 class="panel-title">Studio</h2>
 				</header>
+
 				<section class="studio-section">
 					<div class="section-header">
 						<p class="section-title">Audio Overview</p>
@@ -99,9 +101,18 @@
 						<button class="action-button generate-button" disabled="" type="button">Generate</button>
 					</div>
 				</section>
+
 				<section class="studio-section">
 					<div class="section-header">
 						<p class="section-title">Notes</p>
+						<button aria-label="More options" class="more-options-button" type="button">
+							<svg aria-hidden="true" class="icon" fill="none" stroke="currentColor"
+									stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24">
+								<circle cx="12" cy="12" r="1"></circle>
+								<circle cx="19" cy="12" r="1"></circle>
+								<circle cx="5" cy="12" r="1"></circle>
+							</svg>
+						</button>
 					</div>
 					<button class="add-note-button" type="button">+ Add note</button>
 					<div class="note-buttons">
@@ -124,7 +135,8 @@
 							</svg>
 							Briefing doc
 						</button>
-						<button class="note-button" disabled="" type="button">
+						<!-- FAQ Button: now enabled after KB creation -->
+						<button class="note-button" id="faqButton" type="button">
 							<svg aria-hidden="true" class="icon" fill="none" stroke="currentColor"
 									stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24">
 								<rect height="16" rx="2" ry="2" width="18" x="3" y="4"></rect>
@@ -139,6 +151,12 @@
 							</svg>
 							Timeline
 						</button>
+					</div>
+					<!-- Notes Container: holds all notes (FAQs, outlines, etc) in a row-wise flex layout -->
+					<div id="notesContainer" class="notes-container">
+						<!-- FAQ List Display (row-wise) -->
+						<div id="faqList" class="faq-list"></div>
+						<!-- Other note types (e.g., outlines) can be added here in the future -->
 					</div>
 					<div class="panel-empty-state">
 						<img alt="Document icon gray" class="empty-icon" height="45"
