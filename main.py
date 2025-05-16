@@ -15,7 +15,6 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.document_loaders import CSVLoader, Docx2txtLoader, PyPDFLoader, TextLoader
 from langchain_community.vectorstores.faiss import FAISS
 from langchain_google_genai import ChatGoogleGenerativeAI, GoogleGenerativeAIEmbeddings
-from langchain_core.messages import SystemMessage
 
 
 # Configuring Flask app
@@ -40,6 +39,8 @@ Docs_Splitter = RecursiveCharacterTextSplitter(strip_whitespace=True, length_fun
 
 # Initializing the Chat Model
 llm = ChatGoogleGenerativeAI(model="gemini-2.5-flash-preview-04-17", google_api_key=google_api_key)
+
+prompt = hub.pull("rlm/rag-prompt")
 
 
 # noinspection PyUnresolvedReferences
@@ -80,7 +81,8 @@ def upload_files():
 		return jsonify({'error': 'No file in the request'}), 400
 	
 	incoming_file = request.files['file']
-	uploads_filepath = path.join(".//uploads/", str(path.splitext(incoming_file.filename)[0]) + dt.now(tz.utc).strftime("_%Y%m%d%H%M%S") + str(
+	uploads_filepath = path.join(".//uploads/", str(
+		path.splitext(incoming_file.filename)[0]) + dt.now(tz.utc).strftime("_%Y%m%d%H%M%S") + str(
 		path.splitext(incoming_file.filename)[1]))
 	
 	if not path.exists("./uploads/"):
@@ -149,9 +151,7 @@ def chat():
 			folder_path=".//KnowledgeBase//FAISS//",
 			allow_dangerous_deserialization=True,
 			embeddings=EmbeddingFunction
-		).similarity_search(query=user_message)
-		
-		prompt = SystemMessage()
+			).similarity_search(query=user_message)
 		
 		# Generate the AI's response using the prompt and retrieved documents
 		messages = prompt.invoke({"question": user_message, "context": retrieved_docs})
