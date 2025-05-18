@@ -1,8 +1,6 @@
 ## ABSTRACT
----
 The AI-Driven Knowledge Synthesis Platform automates the transformation of unstructured data, such as PDFs, e-books, spreadsheets, and web articles, into structured, multimodal outputs including summaries, quizzes, flashcards, and podcasts. Leveraging Retrieval-Augmented Generation pipelines, LangChain orchestration, and transformer-based NLP models, the platform enables dynamic cross-document knowledge synthesis tailored to user roles like students, educators, and professionals. It utilises semantic embeddings stored in a FAISS vector database for accurate and efficient retrieval. The system features a Gradio-based web interface, Python backend, and cloud deployment via Microsoft Azure. Designed with scalability, personalisation, and automation in mind, the platform significantly reduces manual content curation time, enhances learning and training outcomes, and supports educational institutions and corporate environments with customizable AI-generated content.
 # CHAPTER 1 – INTRODUCTION
----
 ## Introduction
 In today's data-driven landscape, organisations face an overwhelming deluge of unstructured digital documents, including PDFs, spreadsheets, presentations, and reports, stored across diverse platforms and formats. Manually searching, extracting, and synthesising meaningful information from this data is a laborious and inefficient process. Fortunately, the evolution of Natural Language Processing, semantic search, and vector databases has enabled the development of intelligent systems that can understand and retrieve relevant information with human-like efficiency.
 This project presents the development of a Document Understanding and Retrieval System that leverages state-of-the-art AI frameworks like LangChain and vector databases such as FAISS, deployed and scaled on Azure cloud infrastructure. The system ingests diverse file formats, parsing them into semantic chunks, embedding them into a vector space, and performing retrieval-augmented generation to intelligently answer queries.
@@ -51,7 +49,6 @@ Key components include:
 6. **Cloud Deployment:** Implement the entire system on Microsoft Azure with features such as auto-scaling, caching, load-balancing, and high availability.
 The system is engineered to support scalable, rapid-response, and robust performance capabilities for enterprise-level applications such as knowledge management, research automation, legal document analysis, and customer support.
 # CHAPTER 2 – LITERATURE SURVEY
----
 ## Existing System
 In recent years, the integration of artificial intelligence in education and productivity platforms has seen a rise. However, most of the existing systems offer limited and fragmented functionalities. For instance:
 - **Quizlet:** a widely used platform, enables users to create flashcards manually. While it supports learning through spaced repetition and collaborative usage, it is heavily dependent on user-generated content and lacks any advanced automation or AI-based synthesis capabilities.
@@ -91,7 +88,6 @@ Frontend is built using Gradio for fast and interactive user interfaces. These t
 - Since outputs are generated automatically using AI pipelines, users (educators, students, professionals) can benefit without requiring any technical background.
 This makes the system practical and easy to integrate into existing academic and corporate workflows, ensuring high user acceptance and a minimal learning curve.
 # CHAPTER 3 – REQUIREMENTS ANALYSIS
----
 ## Requirement Analysis Method
 The requirement analysis for this project involved a combination of interviews, observation, and document analysis to thoroughly understand user needs and system expectations. The approach comprised the following steps:
 ### Stakeholder Identification
@@ -203,7 +199,7 @@ Every generated output (summary, quiz, podcast) shall be traceable to its source
 ### Hardware
 
 | **Component**   | **Specification**                      |
-| --------------- | -------------------------------------- |
+|  | -- |
 | Processor       | Intel Core i3 (10th Gen) or equivalent |
 | Ram             | 4 GB                                   |
 | Hard Disk       | 256 GB SSD                             |
@@ -213,7 +209,6 @@ Every generated output (summary, quiz, podcast) shall be traceable to its source
 ### Software
 Python, Flask, LangChain, HuggingFace Transformers, FAISS, Docker, Microsoft Azure.
 # CHAPTER 4 – DESIGN
----
 ## Software Requirements Specification (SRS) Summary
 The platform is designed to handle a diverse range of document formats, including PDFs, e-books, spreadsheets, presentations, and web articles. It employs advanced natural language processing models and retrieval-augmented generation pipelines to extract, synthesise, and repurpose content into various outputs, such as summaries, quizzes, flashcards, and podcasts.
 The system generates these outputs dynamically based on the user's input and role, ensuring a personalised and context-aware experience. It leverages technologies like LangChain for orchestration, Hugging Face Transformers for semantic understanding, and FAISS for efficient vector-based similarity searches. This ensures that the content is not only retrieved accurately but also generated in a way that aligns with the user's intent and learning objectives.
@@ -222,7 +217,7 @@ The platform is especially useful for academic institutions automating course ma
 This section summarises the key functional and non-functional requirements outlined in Chapter 3 and maps them to the high-level components of the system.
 
 | **Requirement ID** | **Description**                                          | **Mapped Component**              |
-| ------------------ | -------------------------------------------------------- | --------------------------------- |
+|  | -- |  |
 | **FR-1**           | Upload documents in PDF, spreadsheet, presentation, etc. | Document Ingestion Service        |
 | **FR-2**           | Parse and chunk documents into semantic units            | Document Parser (LangChain)       |
 | **FR-3**           | Generate and store vector embeddings                     | Embedding Service & FAISS DB      |
@@ -253,7 +248,6 @@ Figure 6 – DFD Level 2
 ## Database Design (ER Diagram)
 Figure 7 – ER Diagram
 # CHAPTER 5 – SYSTEM MODELING
----
 ## Detailed Class Diagram
 Figure 8 – Detailed Class Diagram
 ## Interaction Diagrams
@@ -277,7 +271,6 @@ Figure 15 – Deployment Diagram
 - **End-to-End Tests:** Upload a sample research paper → request summary → verify summary contains key sections.
 - **Performance Tests:** Ensure average query response < 3 seconds under 100 concurrent users.
 # CHAPTER 6 – CONCLUSION & FUTURE WORK
----
 ## Limitations of the Project
 ### Dependency on Third-Party NLP Libraries
 The platform relies heavily on open-source libraries such as Hugging Face Transformers, LangChain, and FAISS. While these tools offer powerful capabilities, they are subject to external updates and breaking changes. Any major version change in these dependencies may require substantial code refactoring or reintegration.
@@ -294,7 +287,6 @@ The current system supports summaries, flashcards, quizzes, and podcasts. In fut
 ### Administrative Dashboard with Analytics
 A feature-rich analytics dashboard will be integrated to help administrators track system usage patterns, user engagement metrics, and content popularity. This will aid decision-making, resource allocation, and continuous improvement of the system.
 # CHAPTER 7 – BIBLIOGRAPHY & REFERENCES
----
 ## BIBLIOGRAPHY & REFERENCES
 \[1\] “Azure AI Search Documentation,” 25 February 2025. \[Online\]. Available: <https://learn.microsoft.com/en-us/azure/search/>. \[Accessed 10 March 2025\].
 
