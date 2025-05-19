@@ -27,9 +27,514 @@
 		</header>
 
 		<main>
-			<h1 class="gradient-text">About</h1>
-			<p>Webpage under Construction</p>
+			<h2 id="abstract">ABSTRACT</h2>
+			<p>The AI-Driven Knowledge Synthesis Platform automates the transformation of unstructured data, such as PDFs, e-books, spreadsheets, and web articles, into structured, multimodal outputs including summaries, quizzes, flashcards, and podcasts. Leveraging Retrieval-Augmented Generation pipelines, LangChain orchestration, and transformer-based NLP models, the platform enables dynamic cross-document knowledge synthesis tailored to user roles like students, educators, and professionals. It utilises semantic embeddings stored in a FAISS vector database for accurate and efficient retrieval. The system features a Gradio-based web interface, Python backend, and cloud deployment via Microsoft Azure. Designed with scalability, personalisation, and automation in mind, the platform significantly reduces manual content curation time, enhances learning and training outcomes, and supports educational institutions and corporate environments with customizable AI-generated content.</p>
+			<h1 id="chapter-1--introduction">CHAPTER 1 – INTRODUCTION</h1>
+			<h2 id="introduction">Introduction</h2>
+			<p>In today&#39;s data-driven landscape, organisations face an overwhelming deluge of unstructured digital documents, including PDFs, spreadsheets, presentations, and reports, stored across diverse platforms and formats. Manually searching, extracting, and synthesising meaningful information from this data is a laborious and inefficient process. Fortunately, the evolution of Natural Language Processing, semantic search, and vector databases has enabled the development of intelligent systems that can understand and retrieve relevant information with human-like efficiency. This project presents the development of a Document Understanding and Retrieval System that leverages state-of-the-art AI frameworks like LangChain and vector databases such as FAISS, deployed and scaled on Azure cloud infrastructure. The system ingests diverse file formats, parsing them into semantic chunks, embedding them into a vector space, and performing retrieval-augmented generation to intelligently answer queries. The need for such a system is evident across enterprise settings, academic environments, legal research, and even personal productivity tools. This project aims to provide a modular, cloud-scalable solution that automates the ingestion, chunking, embedding, and retrieval of documents, producing contextual responses in real time. The report details the full system design, from requirement analysis and architecture to UML diagrams, deployment models, and future scope. It also evaluates the system&#39;s performance on key parameters like speed, scalability, and usability.
+			</p>
+			<h2 id="problem-statement">Problem Statement</h2>
+			<p>Organisations and users regularly deal with unstructured documents in formats like PDFs, Word files, presentations, and spreadsheets. Extracting relevant information or answering specific questions from such documents remains a manual and inefficient task. Traditional keyword-based search engines often fail to grasp the semantic context, leading to poor results. There is an urgent need for an AI-powered system that can intelligently understand document content, chunk it into meaningful segments, and store it in a format that supports fast, context-aware retrieval. Such a system should not only fetch relevant segments but also generate human-like responses based on the retrieved context. This project aims to address this problem by building a scalable Document Understanding and Retrieval System that leverages semantic embeddings, retrieval-augmented generation, and multimodal output synthesis — all deployed on cloud infrastructure to ensure performance, scalability, and availability.
+			</p>
+			<h2 id="objective">Objective</h2>
+			<ul>
+				<li>Automate content extraction from unstructured documents.</li>
+				<li>Generate multimodal outputs like quizzes, summaries, flashcards, and podcasts.</li>
+				<li>Enable cross-document synthesis and personalisation.</li>
+				<li>Support scalable deployment for institutions and enterprises.</li>
+			</ul>
+			<h2 id="modules-of-the-system">Modules of the System</h2>
+			<p>The system is structured into several core modules, each tasked with a distinct stage in the document understanding and response generation pipeline. These modules work in coordination to deliver accurate, personalised, and multimodal outputs.</p>
+			<h3 id="document-ingestion">Document Ingestion</h3>
+			<p>This module is responsible for the initial processing of documents in various formats, such as PDFs, Word documents, spreadsheets, and presentation slides. It includes functionalities for:</p>
+			<ol>
+				<li>Uploading documents via user interfaces or APIs.</li>
+				<li>Converting them into machine-readable text using OCR (for scanned files) or parsers.</li>
+				<li>Organising documents into a consistent internal structure for downstream processing.</li>
+			</ol>
+			<h3 id="knowledge-extraction">Knowledge Extraction</h3>
+			<p>Once documents are ingested, this module processes the raw content to extract meaningful semantic units. It includes:</p>
+			<ol>
+				<li>Text segmentation (or chunking) using natural language processing techniques.</li>
+				<li>Metadata extraction, such as headings, authorship, and timestamps.</li>
+				<li>Entity recognition and relation extraction to build a structured knowledge representation.</li>
+			</ol>
+			<h3 id="cross-document-retrieval">Cross-Document Retrieval</h3>
+			<p>This module enables semantic search across multiple documents by leveraging vector-based similarity measures. It includes:</p>
+			<ol>
+				<li>Generating embeddings for each document chunk using transformer-based models.</li>
+				<li>Storing these embeddings in a vector database (e.g., FAISS) for fast nearest-neighbour retrieval.</li>
+				<li>Accepting user queries and retrieving the most contextually relevant chunks across the document corpus using a Retrieval-Augmented Generation (RAG) approach.</li>
+			</ol>
+			<h3 id="multimodal-response-generation">Multimodal Response Generation</h3>
+			<p>After retrieving the relevant content, this module uses generative AI models (like GPT) to synthesise responses in various formats:</p>
+			<ol>
+				<li>Textual summaries and explanations.</li>
+				<li>Interactive quizzes based on extracted key points.</li>
+				<li>Flashcards for revision and learning.</li>
+				<li>Audio outputs or podcast scripts for auditory consumption.</li>
+			</ol>
+			<h2 id="scope">Scope</h2>
+			<p>The goal of this project is to design, develop, and deploy an AI-powered document understanding system using a Retrieval-Augmented Generation pipeline. The system is built to handle a variety of document formats, including PDFs, spreadsheets, and presentation slides, and enables end-to-end semantic search and synthesis capabilities. Key components include:</p>
+			<ol>
+				<li>
+					<strong>Document Ingestion:</strong>
+					Upload and preprocess multiple document types from users.
+				</li>
+				<li>
+					<strong>Semantic Chunking:</strong>
+					Parse documents into meaningful text segments using natural language processing (NLP).
+				</li>
+				<li>
+					<strong>Vector Embedding and Storage:</strong>
+					Generate and store semantic embeddings in a FAISS vector database for efficient retrieval.
+				</li>
+				<li>
+					<strong>Query Processing &amp; Retrieval:</strong>
+					Accept user queries and retrieve contextually relevant document segments using a RAG architecture.
+				</li>
+				<li>
+					<strong>Response Generation:</strong>
+					Use generative AI models to synthesise coherent, informative, and multimodal responses.
+				</li>
+				<li>
+					<strong>Cloud Deployment:</strong>
+					Implement the entire system on Microsoft Azure with features such as auto-scaling, caching, load-balancing, and high availability. The system is engineered to support scalable, rapid-response, and robust performance capabilities for enterprise-level applications such as knowledge management, research automation, legal document analysis, and customer support.
+				</li>
+			</ol>
+			<h1 id="chapter-2--literature-survey">CHAPTER 2 – LITERATURE SURVEY</h1>
+			<h2 id="existing-system">Existing System</h2>
+			<p>In recent years, the integration of artificial intelligence in education and productivity platforms has seen a rise. However, most of the existing systems offer limited and fragmented functionalities. For instance:</p>
+			<ul>
+				<li>
+					<strong>Quizlet:</strong>
+					a widely used platform, enables users to create flashcards manually. While it supports learning through spaced repetition and collaborative usage, it is heavily dependent on user-generated content and lacks any advanced automation or AI-based synthesis capabilities.
+				</li>
+				<li>
+					<strong>Grammarly:</strong>
+					Another prevalent tool focuses primarily on grammar checking and language refinement. Although powered by NLP techniques, its scope is narrowly limited to writing enhancement and does not cater to knowledge extraction or multimodal content creation. Furthermore, traditional document summarisation tools are generally single-format focused and cannot process and integrate information across multiple types of documents such as PDFs, spreadsheets, and web pages.
+				</li>
+			</ul>
+			<h3 id="limitations-in-existing-systems">Limitations in Existing Systems</h3>
+			<ul>
+				<li>No support for cross-format knowledge synthesis.</li>
+				<li>Lack of personalised or dynamic output generation.</li>
+				<li>Minimal or no use of advanced AI-based document retrieval and synthesis pipelines.</li>
+				<li>Outputs are either static or user-dependent, with little automation.</li>
+			</ul>
+			<h2 id="proposed-system">Proposed System</h2>
+			<p>The proposed AI-Driven Knowledge Synthesis Platform is an intelligent, cloud-based solution designed to automate the processes of document understanding, knowledge extraction, and multimodal output generation. Unlike traditional siloed tools such as basic summarizers, grammar checkers, or flashcard creators, this platform offers a unified workflow powered by advanced Natural Language Processing and Retrieval-Augmented Generation techniques. At the core, the system enables users to upload diverse document types, including PDFs, spreadsheets, and presentations. These documents are parsed and semantically segmented into meaningful chunks using LangChain-orchestrated models. Each chunk is transformed into a high-dimensional embedding vector and stored in a FAISS vector database, facilitating context-aware semantic search. When a user submits a query, the system retrieves the most relevant document segments using both keyword and vector similarity and passes them through a generative language model to produce human-like responses. The key differentiator of this system is its capacity to generate multimodal outputs—including textual summaries, quizzes, flashcards, and podcasts—tailored to diverse user roles such as students, educators, or corporate professionals. The entire application is containerised using Docker and deployed on Microsoft Azure, ensuring scalability, high availability, and seamless integration into institutional or enterprise environments. This proposed system thus addresses a critical gap in intelligent document processing and serves as a comprehensive, user-friendly, and scalable solution for modern knowledge management needs.
+			</p>
+			<h3 id="core-highlights">Core Highlights</h3>
+			<ul>
+				<li>
+					<strong>Document Parsing:</strong>
+					Ingests and converts diverse formats like PDFs, spreadsheets, e-books, and web articles into structured data.
+				</li>
+				<li>
+					<strong>Retrieval-Augmented Generation (RAG):</strong>
+					Uses semantic and keyword-based search to fetch relevant chunks from a document base, enabling high-quality content generation.
+				</li>
+				<li>
+					<strong>Multimodal Output Generation:</strong>
+					Automatically creates summaries, quizzes, flashcards, and even audio-based outputs (like podcasts) based on user needs. The platform offers personalised output generation through role-based customisation, and it ensures scalability via cloud deployment. Unlike existing tools, it leverages vector databases, LangChain orchestration, and transformer-based NLP models to provide a robust end-to-end solution.
+				</li>
+			</ul>
+			<h3 id="feasibility-study">Feasibility Study</h3>
+			<p>Feasibility analysis determines the viability of implementing the proposed system from multiple dimensions:</p>
+			<h4 id="technical-feasibility">Technical Feasibility</h4>
+			<p>The system leverages proven, open-source and cloud-compatible technologies:</p>
+			<ul>
+				<li>Transformers from Hugging Face for embedding and generation tasks.</li>
+				<li>LangChain, which allows seamless orchestration of RAG pipelines.</li>
+				<li>Vector databases (FAISS) for fast, similarity-based content retrieval.</li>
+				<li>The backend is developed in Python, ensuring compatibility with popular AI frameworks. Frontend is built using Gradio for fast and interactive user interfaces. These tools are mature, well-supported, and capable of handling real-time data processing and transformation.</li>
+			</ul>
+			<h4 id="economic-feasibility">Economic Feasibility</h4>
+			<ul>
+				<li>Deployment via Microsoft Azure offers a flexible pricing model with pay-as-you-go plans, making it cost-efficient for academic institutions and startups.</li>
+				<li>Open-source libraries and frameworks minimise initial development and licensing costs.</li>
+				<li>Containerization using Docker enables portability and reduces infrastructure-related expenditures.</li>
+				<li>Thus, from a cost-benefit perspective, the system is economically viable for small teams and scalable enough for enterprise environments.</li>
+			</ul>
+			<h4 id="operational-feasibility">Operational Feasibility</h4>
+			<ul>
+				<li>The interface is intuitive and accessible via a standard web browser, requiring no installation.</li>
+				<li>Built using Gradio, it supports interactive document uploads, role-based personalisation, and easy navigation.</li>
+				<li>Since outputs are generated automatically using AI pipelines, users (educators, students, professionals) can benefit without requiring any technical background. This makes the system practical and easy to integrate into existing academic and corporate workflows, ensuring high user acceptance and a minimal learning curve.</li>
+			</ul>
+			<h1 id="chapter-3--requirements-analysis">CHAPTER 3 – REQUIREMENTS ANALYSIS</h1>
+			<h2 id="requirement-analysis-method">Requirement Analysis Method</h2>
+			<p>The requirement analysis for this project involved a combination of interviews, observation, and document analysis to thoroughly understand user needs and system expectations. The approach comprised the following steps:</p>
+			<h3 id="stakeholder-identification">Stakeholder Identification</h3>
+			<ul>
+				<li>Identified key stakeholders such as end-users (students, researchers), system administrators, and technical teams involved in implementation.</li>
+			</ul>
+			<h3 id="requirement-gathering-techniques">Requirement Gathering Techniques</h3>
+			<ul>
+				<li>
+					<strong>Interviews &amp; Questionnaires:</strong>
+					Conducted structured discussions with users to gather expectations about functionalities like document upload, search accuracy, response time, and system accessibility.
+				</li>
+				<li>
+					<strong>Document Study:</strong>
+					Reviewed technical papers and similar existing platforms to define benchmark features and non-functional needs.
+				</li>
+				<li>
+					<strong>Observation:</strong>
+					Simulated scenarios of document processing and query interactions to understand pain points and usability gaps.
+				</li>
+			</ul>
+			<h3 id="requirement-categorisation">Requirement Categorisation</h3>
+			<ul>
+				<li>Clearly distinguished between Functional Requirements (FR) and Non-Functional Requirements (NFR).</li>
+				<li>Each requirement was mapped to its corresponding system module to ensure traceability.</li>
+			</ul>
+			<h3 id="validation-and-verification">Validation and Verification</h3>
+			<ul>
+				<li>Requirements were verified against stakeholder feedback and validated for technical feasibility with the proposed technology stack (LangChain, FAISS, Azure).</li>
+			</ul>
+			<h2 id="data-requirements">Data Requirements</h2>
+			<ul>
+				<li>
+					<strong>Input:</strong>
+					PDFs, Word documents, spreadsheets, e-books
+				</li>
+				<li>
+					<strong>Output:</strong>
+					Summaries, Flashcards, Quizzes, Podcasts.
+				</li>
+			</ul>
+			<h2 id="functional-requirements">Functional Requirements</h2>
+			<p>Functional requirements establish the core behaviour and capabilities that the system must provide to its users. These features are essential to the operation of the AI-Driven Knowledge Synthesis Platform, aligning with the system&#39;s objectives of enabling automated, multimodal knowledge synthesis. The following is a detailed list of the functional requirements:</p>
+			<h3 id="document-upload-and-ingestion">Document Upload and Ingestion</h3>
+			<p>The system shall allow users to upload sources in various formats, such as:</p>
+			<ul>
+				<li>PDF</li>
+				<li>DOCX</li>
+				<li>Excel sheets (XLSX/CSV)</li>
+				<li>PowerPoint presentations (PPTX)</li>
+				<li>E-books (EPUB)</li>
+				<li>Web articles (via URL input)</li>
+				<li>Uploaded documents shall be stored temporarily for processing and retrieval.</li>
+			</ul>
+			<h3 id="document-parsing-and-preprocessing">Document Parsing and Preprocessing</h3>
+			<ul>
+				<li>The platform shall extract raw text from uploaded documents using format-specific parsers.</li>
+				<li>Content shall be segmented into semantically meaningful chunks using LangChain’s document chunking pipeline.</li>
+				<li>Metadata such as title, author, and date shall be extracted where available.</li>
+			</ul>
+			<h3 id="semantic-embedding-and-storage">Semantic Embedding and Storage</h3>
+			<ul>
+				<li>Each document chunk shall be converted into vector embeddings using pre-trained transformer models (e.g., BERT or Sentence-BERT).</li>
+				<li>These embeddings shall be stored in a FAISS-based vector database to support similarity-based searches.</li>
+				<li>The system shall ensure traceability by tagging each embedding with source document references.</li>
+			</ul>
+			<h3 id="query-input-and-cross-document-retrieval">Query Input and Cross-Document Retrieval</h3>
+			<ul>
+				<li>The system shall provide a query interface for users to input questions or topics of interest.</li>
+				<li>Upon query submission, the system shall:
+					<ul>
+						<li>Perform keyword matching and vector similarity search.</li>
+						<li>Retrieve the most relevant document chunks from across all uploaded documents.</li>
+					</ul>
+				</li>
+				<li>The system shall present a ranked list of retrieved sources to ensure transparency.</li>
+			</ul>
+			<h3 id="multimodal-content-generation">Multimodal Content Generation</h3>
+			<p>The platform shall dynamically generate output in multiple formats:</p>
+			<ul>
+				<li>
+					<strong>Summaries:</strong>
+					Both extractive (keyword-based) and abstractive (language generation).
+				</li>
+				<li>
+					<strong>Quizzes:</strong>
+					Auto-generated MCQs based on key concepts extracted from documents.
+				</li>
+				<li>
+					<strong>Flashcards:</strong>
+					Generated in Q&amp;A format for spaced-repetition learning.
+				</li>
+				<li>
+					<strong>Podcasts:</strong>
+					Summarised content converted to speech using text-to-speech APIs.
+				</li>
+			</ul>
+			<h3 id="role-based-personalisation">Role-Based Personalisation</h3>
+			<ul>
+				<li>The system shall allow users to select roles (e.g., Educator, Student, Professional).</li>
+				<li>Based on the selected role, output formatting, complexity, and tone shall be adapted. For example, educators may receive presentation slides, while students receive summaries and flashcards.</li>
+			</ul>
+			<h3 id="user-authentication-and-access-control">User Authentication and Access Control</h3>
+			<p>The system shall implement user authentication to support session-based access. Different access privileges shall be defined based on roles:</p>
+			<ul>
+				<li>
+					<strong>Admin:</strong>
+					Full access, including user management and analytics.
+				</li>
+				<li>
+					<strong>General User:</strong>
+					Upload, query, and view outputs.
+				</li>
+			</ul>
+			<h3 id="output-download-and-sharing">Output Download and Sharing</h3>
+			<p>Users shall be able to download generated outputs in popular formats:</p>
+			<ul>
+				<li>
+					<strong>Summaries and flashcards:</strong>
+					PDF or DOCX
+				</li>
+				<li>
+					<strong>Quizzes:</strong>
+					PDF or HTML
+				</li>
+				<li>
+					<strong>Podcasts:</strong>
+					MP3 or WAV Outputs shall be optionally shareable via unique public URLs.
+				</li>
+			</ul>
+			<h3 id="feedback-collection">Feedback Collection</h3>
+			<ul>
+				<li>The system shall offer feedback mechanisms to rate the accuracy and relevance of outputs.</li>
+				<li>This feedback shall be stored to improve future results via retraining or fine-tuning.</li>
+			</ul>
+			<h3 id="system-logs-and-monitoring">System Logs and Monitoring</h3>
+			<ul>
+				<li>All user activities (upload, query, generation) shall be logged for monitoring and analytics.</li>
+				<li>Admin users shall be able to view system usage reports and error logs via a dashboard.</li>
+			</ul>
+			<h2 id="non-functional-requirements">Non-Functional Requirements</h2>
+			<p>Non-functional requirements outline the performance characteristics, quality attributes, and constraints that the system must meet. These requirements ensure the system is usable, efficient, reliable, scalable, and secure - essential qualities for academic and professional adoption. The non-functional requirements for the AI-Driven Knowledge Synthesis Platform are categorised as follows:</p>
+			<h3 id="performance-requirements">Performance Requirements</h3>
+			<ul>
+				<li>The system shall process user queries and generate responses within a maximum latency of 3 seconds under normal load conditions.</li>
+				<li>Embedding generation and document parsing for a standard document (less than 10MB) shall complete within 5–8 seconds.</li>
+				<li>Simultaneous processing of at least 20 concurrent users shall be supported without degradation in performance on the standard Azure VM configuration.</li>
+			</ul>
+			<h3 id="scalability">Scalability</h3>
+			<ul>
+				<li>The platform shall be horizontally scalable to accommodate increasing user loads, documents, and queries.</li>
+				<li>It shall support auto-scaling of compute resources in the cloud (Azure) during peak usage.</li>
+				<li>Modular architecture using microservices and containerization (via Docker) shall enable independent scaling of the document processing, embedding, retrieval, and generation modules.</li>
+			</ul>
+			<h3 id="reliability-and-availability">Reliability and Availability</h3>
+			<ul>
+				<li>The system shall maintain 99.5% uptime, ensuring high availability for users across different time zones.</li>
+				<li>All critical services shall be monitored using health checks, and failure recovery mechanisms (such as automatic restarts) shall be in place.</li>
+				<li>Azure’s distributed infrastructure shall be leveraged to ensure redundancy and failover support.</li>
+			</ul>
+			<h3 id="usability">Usability</h3>
+			<ul>
+				<li>The user interface shall be intuitive, clean, and responsive, making it accessible to users with minimal technical expertise.</li>
+				<li>Instructions and tooltips shall be available for every major feature (e.g., file upload, output options).</li>
+				<li>The platform shall support keyboard navigation, form validation, and mobile responsiveness for accessibility on tablets and smartphones.</li>
+			</ul>
+			<h3 id="maintainability">Maintainability</h3>
+			<ul>
+				<li>The system architecture shall follow a modular structure, ensuring ease of updates and bug fixes.</li>
+				<li>Code shall adhere to standard coding conventions (e.g., PEP 8 for Python).</li>
+				<li>Version control shall be implemented via Git, with proper documentation for all modules to support collaborative development and future enhancement.</li>
+			</ul>
+			<h3 id="portability">Portability</h3>
+			<ul>
+				<li>The application shall run in containerised environments and be deployable on any cloud platform (e.g., Azure, AWS, GCP) or on-premise system with Docker support.</li>
+				<li>It shall be accessible across all major web browsers (Chrome, Firefox, Edge, Safari).</li>
+				<li>No platform-specific features shall be hardcoded to ensure cross-platform compatibility.</li>
+			</ul>
+			<h3 id="security-requirements">Security Requirements</h3>
+			<ul>
+				<li>All data transmissions shall be encrypted using HTTPS with TLS 1.3.</li>
+				<li>Uploaded documents shall be sandboxed and removed from storage after processing to ensure data privacy.</li>
+				<li>Role-based access control (RBAC) shall be enforced to prevent unauthorised access to administrative functions.</li>
+				<li>Authentication tokens (JWT or OAuth2) shall be used to secure user sessions.</li>
+				<li>The system shall be regularly tested for vulnerabilities (e.g., XSS, CSRF, injection attacks).</li>
+			</ul>
+			<h3 id="compliance-and-data-privacy">Compliance and Data Privacy</h3>
+			<p>The system shall comply with applicable data protection regulations (e.g., GDPR, India’s DPDP Act) by ensuring:</p>
+			<ul>
+				<li>No long-term storage of personal documents or user data unless explicitly consented.</li>
+				<li>Users can request deletion of their uploaded data at any time.</li>
+			</ul>
+			<h3 id="localisation-and-language-support">Localisation and Language Support</h3>
+			<ul>
+				<li>The system shall support generation of outputs (summaries, quizzes, flashcards) in multiple languages (e.g., English, Hindi, Spanish) using multilingual models.</li>
+				<li>The UI text shall be translatable based on user preference, supporting basic localisation features.</li>
+			</ul>
+			<h3 id="auditability-and-traceability">Auditability and Traceability</h3>
+			<p>Every generated output (summary, quiz, podcast) shall be traceable to its source document chunks through unique identifiers. All user activities (uploads, queries, downloads) shall be logged with timestamps to support auditing.</p>
+			<h2 id="system-specifications">System Specifications</h2>
+			<h3 id="hardware">Hardware</h3>
+			<p>|
+				<strong>Component</strong>
+				|
+				<strong>Specification</strong>
+				| | | -- | | Processor | Intel Core i3 (10th Gen) or equivalent | | Ram | 4 GB | | Hard Disk | 256 GB SSD | | Network Adapter | 802.11 B/G/N Wireless or Ethernet | | Display | 720p resolution monitor | | Input Devices | Standard Keyboard and Mouse |
+			</p>
+			<h3 id="software">Software</h3>
+			<p>Python, Flask, LangChain, HuggingFace Transformers, FAISS, Docker, Microsoft Azure.</p>
+			<h1 id="chapter-4--design">CHAPTER 4 – DESIGN</h1>
+			<h2 id="software-requirements-specification-srs-summary">Software Requirements Specification (SRS) Summary</h2>
+			<p>The platform is designed to handle a diverse range of document formats, including PDFs, e-books, spreadsheets, presentations, and web articles. It employs advanced natural language processing models and retrieval-augmented generation pipelines to extract, synthesise, and repurpose content into various outputs, such as summaries, quizzes, flashcards, and podcasts. The system generates these outputs dynamically based on the user&#39;s input and role, ensuring a personalised and context-aware experience. It leverages technologies like LangChain for orchestration, Hugging Face Transformers for semantic understanding, and FAISS for efficient vector-based similarity searches. This ensures that the content is not only retrieved accurately but also generated in a way that aligns with the user&#39;s intent and learning objectives. The system is expected to significantly reduce the time and effort required for manual content curation, improve the accuracy of cross-document knowledge synthesis, and deliver an engaging user experience through multimodal output delivery. The platform is especially useful for academic institutions automating course material creation, professionals compiling reports and training modules, and organisations managing large volumes of informational content. Overall, the SRS presents the AI-Driven Knowledge Synthesis Platform as a forward-thinking, AI-powered solution that bridges the gap between unstructured knowledge sources and personalised, actionable insights. This section summarises the key functional and non-functional requirements outlined in Chapter 3 and maps them to the high-level components of the system.
+			</p>
+			<p>|
+				<strong>Requirement ID</strong>
+				|
+				<strong>Description</strong>
+				|
+				<strong>Mapped Component</strong>
+				| | | -- | | |
+				<strong>FR-1</strong>
+				| Upload documents in PDF, spreadsheet, presentation, etc. | Document Ingestion Service | |
+				<strong>FR-2</strong>
+				| Parse and chunk documents into semantic units | Document Parser (LangChain) | |
+				<strong>FR-3</strong>
+				| Generate and store vector embeddings | Embedding Service &amp; FAISS DB | |
+				<strong>FR-4</strong>
+				| Retrieve relevant chunks via multimodal outputs | Retrieval Engine (RAG) | |
+				<strong>NFR-1</strong>
+				| Response time under 3 seconds | Caching &amp; Load-Balancing Layer | |
+				<strong>NFR-2</strong>
+				| Auto-scaling on Azure | Azure Deployment &amp; Scaling Groups | |
+				<strong>NFR-3</strong>
+				| High availability | Azure Availability Sets |
+			</p>
+			<h2 id="glossary">Glossary</h2>
+			<ul>
+				<li>
+					<strong>Chunk:</strong>
+					A semantically coherent segment of a document.
+				</li>
+				<li>
+					<strong>Embedding:</strong>
+					A dense numerical vector representing semantic content.
+				</li>
+				<li>
+					<strong>RAG (Retrieval-Augmented Generation):</strong>
+					A framework combining retrieval of relevant text snippets with generative models.
+				</li>
+				<li>
+					<strong>Multimodal Output:</strong>
+					Content generated in multiple formats (text, audio, flashcards).
+				</li>
+			</ul>
+			<h2 id="supplementary-specifications">Supplementary Specifications</h2>
+			<ul>
+				<li>
+					<strong>Security:</strong>
+					All document uploads and outputs are encrypted in transit via HTTPS; stored embeddings are encrypted at rest with Azure Key Vault.
+				</li>
+				<li>
+					<strong>Accessibility:</strong>
+					The UI complies with WCAG 2.1 AA guidelines.
+				</li>
+				<li>
+					<strong>Internationalisation:</strong>
+					Supports English and Hindi localisation.
+				</li>
+			</ul>
+			<h2 id="use-case-mode">Use Case Mode</h2>
+			<p>Figure 1– Use Case Diagram</p>
+			<h2 id="conceptual-class-diagram">Conceptual Class Diagram</h2>
+			<p>Figure 2 – Conceptual Class Diagram</p>
+			<h2 id="activity-diagram">Activity Diagram</h2>
+			<p>Figure 3 – Activity Diagram</p>
+			<h2 id="data-flow-diagrams">Data Flow Diagrams</h2>
+			<p>Figure 4 – DFD Level 0 Figure 5– DFD Level 1 Figure 6 – DFD Level 2</p>
+			<h2 id="database-design-er-diagram">Database Design (ER Diagram)</h2>
+			<p>Figure 7 – ER Diagram</p>
+			<h1 id="chapter-5--system-modeling">CHAPTER 5 – SYSTEM MODELING</h1>
+			<h2 id="detailed-class-diagram">Detailed Class Diagram</h2>
+			<p>Figure 8 – Detailed Class Diagram</p>
+			<h2 id="interaction-diagrams">Interaction Diagrams</h2>
+			<p>Figure 9 – Sequence Diagram Figure 10 – Collaboration Diagram</p>
+			<h2 id="state-diagram">State Diagram</h2>
+			<p>Figure 11 – State Diagram</p>
+			<h2 id="activity-diagram-1">Activity Diagram</h2>
+			<p>Figure 12 – Activity Diagram</p>
+			<h2 id="object-diagram">Object Diagram</h2>
+			<p>Figure 13 – Object Diagram</p>
+			<h2 id="component-diagram">Component Diagram</h2>
+			<p>Figure 14 – Component Diagram</p>
+			<h2 id="deployment-diagram">Deployment Diagram</h2>
+			<p>Figure 15 – Deployment Diagram</p>
+			<h2 id="testing">Testing</h2>
+			<h3 id="unit-testing">Unit Testing</h3>
+			<ul>
+				<li>
+					<strong>DocumentParserTests:</strong>
+					Verify correct chunking of PDF and DOCX inputs.
+				</li>
+				<li>
+					<strong>EmbeddingServiceTests:</strong>
+					Validate embedding vector dimensions and reproducibility.
+				</li>
+			</ul>
+			<h3 id="functional-testing">Functional Testing</h3>
+			<ul>
+				<li>
+					<strong>End-to-End Tests:</strong>
+					Upload a sample research paper → request summary → verify summary contains key sections.
+				</li>
+				<li>
+					<strong>Performance Tests:</strong>
+					Ensure average query response &lt; 3 seconds under 100 concurrent users.
+				</li>
+			</ul>
+			<h1 id="chapter-6--conclusion--future-work">CHAPTER 6 – CONCLUSION &amp; FUTURE WORK</h1>
+			<h2 id="limitations-of-the-project">Limitations of the Project</h2>
+			<h3 id="dependency-on-third-party-nlp-libraries">Dependency on Third-Party NLP Libraries</h3>
+			<p>The platform relies heavily on open-source libraries such as Hugging Face Transformers, LangChain, and FAISS. While these tools offer powerful capabilities, they are subject to external updates and breaking changes. Any major version change in these dependencies may require substantial code refactoring or reintegration.</p>
+			<h3 id="scalability-bottlenecks-in-vector-database">Scalability Bottlenecks in Vector Database</h3>
+			<p>As the number of processed documents and corresponding vector embeddings increases, the performance of the FAISS vector database may degrade without the implementation of techniques like sharding or hierarchical indexing. In its current form, the system is optimised for moderate-scale use but may require architectural upgrades to handle enterprise-level data volumes.</p>
+			<h2 id="future-enhancements">Future Enhancements</h2>
+			<p>To ensure the continued evolution, adaptability, and scalability of the platform, the following future enhancements are proposed:</p>
+			<h3 id="domain-specific-model-fine-tuning">Domain-Specific Model Fine-Tuning</h3>
+			<p>Incorporating fine-tuned versions of large language models trained on specific domains (e.g., legal, medical, or academic texts) can significantly improve the accuracy and contextual relevance of the synthesised outputs. This will also allow the system to adapt better to industry-specific terminology.</p>
+			<h3 id="sharding-and-replication-for-faiss">Sharding and Replication for FAISS</h3>
+			<p>To handle exponentially growing vector data, the system architecture should integrate sharding techniques across multiple FAISS instances and use replication strategies to ensure high availability and faster retrieval.</p>
+			<h3 id="support-for-additional-output-modalities">Support for Additional Output Modalities</h3>
+			<p>The current system supports summaries, flashcards, quizzes, and podcasts. In future iterations, it can be extended to generate interactive learning content such as mind-maps, infographic slides, and AI-generated instructional videos, making it even more engaging for learners.</p>
+			<h3 id="administrative-dashboard-with-analytics">Administrative Dashboard with Analytics</h3>
+			<p>A feature-rich analytics dashboard will be integrated to help administrators track system usage patterns, user engagement metrics, and content popularity. This will aid decision-making, resource allocation, and continuous improvement of the system.</p>
+			<h1 id="chapter-7--bibliography--references">CHAPTER 7 – BIBLIOGRAPHY &amp; REFERENCES</h1>
+			<h2 id="bibliography--references">BIBLIOGRAPHY &amp; REFERENCES</h2>
+			<p>[1] “Azure AI Search Documentation,” 25 February 2025. [Online]. Available:
+				<a href="https://learn.microsoft.com/en-us/azure/search/">https://learn.microsoft.com/en-us/azure/search/</a>
+				. [Accessed 10 March 2025].
+			</p>
+			<p>[2] “FAISS GitHub Wiki,” Meta AI Research, 24 February 2025. [Online]. Available:
+				<a href="https://github.com/facebookresearch/faiss/wiki">https://github.com/facebookresearch/faiss/wiki</a>
+				. [Accessed 10 March 2025].
+			</p>
+			<p>[3] “Flask Documentation (3.1.x),” Pallets, 5 January 2025. [Online]. Available:
+				<a href="https://flask.palletsprojects.com">https://flask.palletsprojects.com</a>
+				. [Accessed 10 March 2025].
+			</p>
+			<p>[4] “LangChain Documentation,” LangChain, Inc., 30 January 2025. [Online]. Available:
+				<a href="https://python.langchain.com/docs/introduction/">https://python.langchain.com/docs/introduction/</a>
+				. [Accessed 10 March 2025].
+			</p>
+			<p>[5] “LangChain HuggingFace Integrations Documentations,” LangChain, Inc., 16 October 2024. [Online]. Available:
+				<a href="https://python.langchain.com/docs/integrations/providers/huggingface/">https://python.langchain.com/docs/integrations/providers/huggingface/</a>
+				. [Accessed 10 March 2025].
+			</p>
+			<p>[6] “LangChain Python API Reference,” LangChain Inc., 2 March 2025. [Online]. Available:
+				<a href="https://python.langchain.com/api_reference/">https://python.langchain.com/api_reference/</a>
+				. [Accessed 10 March 2025].
+			</p>
+			<p>[7] “Gradio Documentation,” Gradio, 9 March 2025. [Online]. Available:
+				<a href="https://www.gradio.app/docs">https://www.gradio.app/docs</a>
+				. [Accessed 10 March 2025].
+			</p>
+			<p>[8] “Python 3.13.2 documentation,” 10 March 2025. [Online]. Available:
+				<a href="https://docs.python.org/3/">https://docs.python.org/3/</a>
+				. [Accessed 10 March 2025].
+			</p>
+			<p>[9] “GitHub Docs,” GitHub, Inc., [Online]. Available:
+				<a href="https://docs.github.com/en">https://docs.github.com/en</a>
+				. [Accessed 10 March 2025].
+			</p>
 		</main>
-
 	</body>
 </html>
